@@ -14,8 +14,9 @@ model User {
   password  String
   role      String    @default("ATTENDEE")
   createdAt DateTime  @default(now())
-  events    Event[]   
-  bookings  Booking[] 
+
+  events    Event[]
+  bookings  Booking[]
 }
 
 model Event {
@@ -25,6 +26,7 @@ model Event {
   date        DateTime
   capacity    Int
   createdAt   DateTime  @default(now())
+
   organiserId Int
   organiser   User      @relation(fields: [organiserId], references: [id])
   bookings    Booking[]
@@ -35,7 +37,9 @@ model Booking {
   userId    Int
   eventId   Int
   createdAt DateTime @default(now())
+
   user      User     @relation(fields: [userId], references: [id])
   event     Event    @relation(fields: [eventId], references: [id])
-  @@unique([userId, eventId]) 
+
+  @@unique([userId, eventId])
 }
