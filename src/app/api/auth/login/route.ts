@@ -1,38 +1,36 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';  
-
-const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';  
+// AI-assisted: route structure aided by Claude (Anthropic)
+import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { signToken } from '@/lib/auth'
+import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
-try {
-const body = await request.json();
-const { email, password } = body;  
+  try {
+    const body = await request.json()
+    const { email, password } = body
 
-if (!email || !password) {
-  return NextResponse.json({ error: 'Missing credentials' }, { status: 400 });
-}
+    if (!email || !password) {
+      return NextResponse.json({ error: 'Missing credentials' }, { status: 400 })
+    }
 
-const user = await prisma.user.findUnique({ where: { email } });
-if (!user) {
-  return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
-}
+    const user = await prisma.user.findUnique({ where: { email } })
+    if (!user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
 
-const isPasswordValid = await bcrypt.compare(password, user.password);
-if (!isPasswordValid) {
-  return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
-}
+    const isValid = await bcrypt.compare(password, user.password)
+    if (!isValid) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
 
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  JWT_SECRET,
-  { expiresIn: '1d' }
-);
+    const token = signToken({ userId: user.id, role: user.role })
 
-return NextResponse.json({ token, role: user.role }, { status: 200 });
-} catch (error) {
-return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-}
+    return NextResponse.json(
+      { token, role: user.role, name: user.name, userId: user.id },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('[POST /api/auth/login]', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
 }
