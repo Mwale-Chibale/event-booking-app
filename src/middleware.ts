@@ -1,6 +1,5 @@
 // AI-assisted: Next.js middleware pattern aided by Claude (Anthropic)
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from '@/lib/auth'
 
 const PROTECTED_PREFIXES = ['/api/bookings', '/api/dashboard']
 
@@ -16,7 +15,14 @@ export function middleware(request: NextRequest) {
   const authHeader = request.headers.get('authorization')
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
 
-  if (!token || !verifyToken(token)) {
+  if (!token) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Verify the token has 3 parts (basic JWT structure check)
+  // Full verification happens in the route handler via getAuthUser()
+  const parts = token.split('.')
+  if (parts.length !== 3) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
