@@ -1,3 +1,4 @@
+// AI-assisted: Error component aided by Claude (Anthropic)
 interface Props {
   message: string
 }
