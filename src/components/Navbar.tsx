@@ -20,7 +20,7 @@ export default function Navbar() {
 
         {/* Left side — app name */}
         <Link href="/" className="text-xl font-bold text-gray-900">
-          EventApp
+          Evently
         </Link>
 
         {/* Right side — links based on auth state */}
