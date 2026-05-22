@@ -103,7 +103,7 @@ export default function EventDetailPage() {
 
       <button
         onClick={() => router.back()}
-        className="text-sm text-gray-500 hover:text-gray-900 mb-6 flex items-center gap-1"
+        className="text-sm text-white-500 hover:text-gray-900 mb-6 flex items-center gap-1"
       >
         ← Back
       </button>
