@@ -63,7 +63,7 @@ export default function Navbar() {
           {/* Logged in — show username and logout */}
           {user && (
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">Hi, {user.name}</span>
+              <span className="text-sm text-gray-500 hover:text-gray-900">Hi, {user.name}</span>
               <button
                 onClick={handleLogout}
                 className="text-red-500 hover:text-red-700"
