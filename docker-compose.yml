@@ -1,0 +1,18 @@
+# AI-assisted: docker-compose structure aided by Claude (Anthropic)
+version: '3.9'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "file:/app/prisma/dev.db"
+      JWT_SECRET: "${JWT_SECRET}"
+      NODE_ENV: "production"
+    volumes:
+      - db_data:/app/prisma
+    restart: unless-stopped
+
+volumes:
+  db_data:

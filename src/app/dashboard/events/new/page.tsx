@@ -85,7 +85,7 @@ export default function NewEventPage() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-400 mb-1">
             Title
           </label>
           <input
@@ -98,7 +98,7 @@ export default function NewEventPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-400 mb-1">
             Description
           </label>
           <textarea
@@ -111,7 +111,7 @@ export default function NewEventPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-400 mb-1">
             Date & Time
           </label>
           <input
