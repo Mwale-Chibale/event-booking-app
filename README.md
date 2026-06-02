@@ -1,9 +1,5 @@
 # Event Booking & Ticketing System
 
-## Team
-Mwale Chibale 2655462 | Mumba Ilunga 2655397
----
-
 ## Architecture
 
 Full-stack web application built with **Next.js 15 (App Router)**. The backend is implemented as API Route Handlers inside the same Next.js project
